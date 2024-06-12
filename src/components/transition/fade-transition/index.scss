@@ -1,0 +1,47 @@
+@import "@/style/utils.scss";
+
+$prefix: jv-fade-transition;
+// 生成fade动画
+@each $size in ssm sm md lg xl {
+  .#{$prefix} {
+    &-#{$size}-enter {
+      opacity: 0;
+    }
+
+    &-#{$size}-enter-active {
+      opacity: 1;
+      transition: trans(opacity, $size);
+    }
+
+    &-#{$size}-exit {
+      opacity: 1;
+    }
+
+    &-#{$size}-exit-active {
+      opacity: 0;
+      transition: trans(opacity, $size);
+    }
+  }
+
+  // .fade-#{$size}-enter {
+  //   opacity: 0;
+  // }
+
+  // .fade-#{$size}-enter-active {
+  //   opacity: 1;
+  //   transition: trans(opacity, $size);
+  // }
+
+  // .fade-#{$size}-exit {
+  //   opacity: 1;
+  // }
+
+  // .fade-#{$size}-exit-active {
+  //   opacity: 0;
+  //   transition: trans(opacity, $size);
+  // }
+}
+
+// .xxx {
+//   opacity: 1;
+// }

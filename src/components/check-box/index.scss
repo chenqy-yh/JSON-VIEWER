@@ -1,0 +1,31 @@
+@import "@/style/utils";
+@import "@/style/mixins";
+
+$prefix: jv-check-box;
+
+.#{$prefix} {
+  &-label {
+    display: flex;
+    gap: var(--jv-space-sm);
+    font-size: var(--jv-font-size-sm);
+
+    @include useHover;
+  }
+
+  &-input {
+    display: none;
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    transition: trans(opacity);
+
+    &.checked {
+      opacity: 1;
+    }
+  }
+}

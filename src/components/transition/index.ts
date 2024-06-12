@@ -1,0 +1,1 @@
+export { default as FadeTranstion } from './fade-transition'

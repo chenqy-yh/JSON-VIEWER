@@ -1,0 +1,20 @@
+@function trans($tar: "", $t: sm) {
+  $_t: var(--jv-duration-#{$t});
+  @if $tar == "" {
+    @return all $_t;
+  } @else {
+    @return $tar $_t;
+  }
+}
+
+@function useVal($val1, $bak) {
+  @if $val1 == "" {
+    @return $bak;
+  } @else {
+    @return $val1;
+  }
+}
+
+@function getBorderColor($color: black) {
+  @return color-mix(in srgb, $color 90%, black);
+}

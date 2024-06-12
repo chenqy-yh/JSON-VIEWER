@@ -1,0 +1,56 @@
+@import "../../style/theme.scss";
+
+$prefix: jv-float-indicator;
+
+.#{$prefix} {
+  &-wrapper {
+    padding: var(--jv-space-ssm);
+    border-radius: var(--jv-radius-sm);
+    @include useTheme {
+      background-color: gv(bg-color-3);
+    }
+  }
+  &-box {
+    position: relative;
+    display: flex;
+  }
+
+  &-option {
+    z-index: 9;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-inline: var(--jv-space-sm);
+    padding-block: var(--jv-space-ssm);
+    border-radius: var(--jv-radius-sm);
+    &.active {
+      @include useTheme {
+        background-color: gv(bg-color-1);
+      }
+    }
+  }
+
+  &-radio-title {
+    font-size: var(--jv-font-size-sm);
+    white-space: nowrap;
+  }
+
+  &-radio {
+    display: none;
+  }
+
+  &-thumb {
+    z-index: 8;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border-radius: var(--jv-radius-sm);
+    @include useTheme {
+      background-color: gv(bg-color-1);
+      color: gv(font-color-1);
+    }
+  }
+  &-thumb-motion {
+    transition: all var(--jv-float-indicator-thumb-duration) ease-in-out;
+  }
+}

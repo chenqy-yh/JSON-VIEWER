@@ -1,0 +1,18 @@
+@import "@/style/theme";
+@import "@/style/utils";
+@import "@/style/mixins";
+
+.file-title-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // padding: var(--jv-space-ssm);
+  // transition: trans();
+  // border-radius: var(--jv-radius-sm);
+  // @include useTheme {
+  //   &:hover {
+  //     background-color: gv(bg-color-3);
+  //   }
+  // }
+  @include useHover(bg-color-3);
+}

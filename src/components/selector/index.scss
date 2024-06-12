@@ -1,0 +1,59 @@
+@import "@/style/theme.scss";
+@import "@/style/utils";
+@import "@/style/mixins";
+
+.selector-container {
+  position: relative;
+}
+
+.selector {
+  padding: var(--jv-space-ssm);
+  position: relative;
+  border-radius: var(--jv-radius-sm);
+  cursor: pointer;
+  transition: trans();
+  font-size: var(--jv-font-size-sm);
+  @include useTheme {
+    color: gv(font-color-3);
+  }
+}
+
+.selector-expand {
+  z-index: 1000;
+  position: absolute;
+  top: calc(100% + var(--jv-space));
+  left: calc(50% - var(--left));
+  transform: translateX(-50%);
+  padding: var(--jv-space-ssm);
+  font-size: var(--jv-font-size-sm);
+  border-radius: var(--jv-radius-sm);
+  display: flex;
+  flex-direction: column;
+  // gap: var(--jv-space-ssm);
+  padding: var(--jv-space-ssm);
+
+  @include useTheme {
+    background-color: gv(bg-color-1);
+    border: 1px solid gv(border-color-1);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 0.35rem;
+    height: 0.35rem;
+    background-color: red;
+    left: calc(50% + var(--left));
+    top: 0;
+    background-color: inherit;
+    transform: translateX(-50%) translateY(-56%) rotate(45deg);
+    @include useTheme {
+      border-top: 1px solid gv(border-color-1);
+      border-left: 1px solid gv(border-color-1);
+    }
+  }
+}
+
+.selector-expand-item {
+  @include useHover;
+}

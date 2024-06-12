@@ -1,0 +1,13 @@
+@import "@/style/theme.scss";
+
+.icon {
+  @include useTheme {
+    color: gv(font-color-2);
+  }
+}
+
+.expand-list {
+  display: flex;
+  gap: var(--jv-space-sm);
+  align-items: center;
+}

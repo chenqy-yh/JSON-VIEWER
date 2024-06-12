@@ -1,0 +1,29 @@
+@import "@/style/theme.scss";
+.header {
+  padding-block: var(--jv-space-ssm);
+  padding-inline: var(--jv-space-sm);
+  border-bottom: 1px solid gv("border-color-1");
+  background-color: gv("bg-color-2");
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.function-list {
+  display: flex;
+  gap: var(--jv-space);
+  align-items: center;
+}
+
+.test {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brand {
+  font-family: "Mona Sans";
+  @include useTheme {
+    color: gv(font-color-1);
+  }
+}

@@ -1,0 +1,73 @@
+@import "../../style/theme";
+@import "../../style/utils";
+
+$colors: (
+  success: var(--jv-color-success),
+  warning: var(--jv-color-warning),
+  error: var(--jv-color-error),
+  info: var(--jv-color-info),
+);
+
+$prefix: jv-message;
+.#{$prefix} {
+  &-container {
+    z-index: 6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding: 20px;
+    pointer-events: none;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--jv-space-sm);
+  }
+
+  &-item {
+    pointer-events: auto;
+    min-width: 12rem;
+    width: max-content;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border-radius: var(--jv-radius-sm);
+    // border: 1px solid;
+
+    // @include useTheme {
+    //   background-color: gv(bg-color-1);
+    //   border: 1px solid gv(border-color-1);
+    // }
+
+    @each $name, $color in $colors {
+      &-#{$name} {
+        background-color: $color;
+        // border-color: var(--jv-color-#{$name}-2);
+        color: var(--jv-color-#{$name}-2);
+      }
+    }
+  }
+
+  &-item-enter {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  &-item-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: trans(all, sm);
+  }
+
+  &-item-exit {
+    opacity: 1;
+  }
+
+  &-item-exit-active {
+    max-height: 0;
+    padding-block: 0;
+    opacity: 0;
+    transition: trans(all, sm);
+  }
+}

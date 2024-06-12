@@ -1,0 +1,18 @@
+@import "./theme";
+@import "./utils";
+
+@mixin useHover($hoverClr: null) {
+  padding-block: var(--jv-space-sm);
+  padding-inline: var(--jv-space);
+  border-radius: var(--jv-radius-sm);
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: var(--jv-radius-sm);
+  transition: trans();
+  &:hover {
+    @include useTheme {
+      // 默认为gv(bg-color-3)
+      background-color: if($hoverClr != null, gv($hoverClr), gv(bg-color-2));
+    }
+  }
+}

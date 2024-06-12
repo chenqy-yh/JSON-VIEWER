@@ -1,0 +1,39 @@
+:root {
+  /* space */
+  --jv-space-ssm: 0.25rem;
+  --jv-space-sm: 0.5rem;
+  --jv-space: 1rem;
+  --jv-space-lg: 2rem;
+  --jv-space-xl: 4rem;
+
+  /* font size */
+  --jv-font-size-ssm: 0.7rem;
+  --jv-font-size-sm: 0.75rem;
+  --jv-font-size: 1rem;
+  --jv-font-size-lg: 1.25rem;
+  --jv-font-size-xl: 1.5rem;
+
+  /* radius*/
+  --jv-radius-ssm: 0.125rem;
+  --jv-radius-sm: 0.25rem;
+  --jv-radius: 0.5rem;
+  --jv-radius-lg: 1rem;
+  --jv-radius-xl: 2rem;
+
+  /* duration */
+  --jv-duration-ssm: 0.1s;
+  --jv-duration-sm: 0.25s;
+  --jv-duration-md: 0.5s;
+  --jv-duration-lg: 1s;
+  --jv-duration-xl: 2s;
+
+  /* color */
+  --jv-color-info: #ededed;
+  --jv-color-info-2: #545454;
+  --jv-color-success: #deffdc;
+  --jv-color-success-2: #29d104;
+  --jv-color-warning: #ffebc4;
+  --jv-color-warning-2: #ff8800;
+  --jv-color-error: #ffddde;
+  --jv-color-error-2: #ff6e73;
+}

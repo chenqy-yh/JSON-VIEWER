@@ -1,0 +1,24 @@
+$prefix: jv-view-switch;
+
+.#{$prefix} {
+  &-fade {
+    &-enter {
+      opacity: 0;
+    }
+    &-enter-active {
+      opacity: 1;
+    }
+
+    &-exit {
+      opacity: 1;
+    }
+
+    &-exit-active {
+      opacity: 0;
+    }
+    &-enter-active,
+    &-exit-active {
+      transition: all var(--jv-view-switch-fade-duration, 0.3s);
+    }
+  }
+}

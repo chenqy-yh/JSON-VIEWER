@@ -1,0 +1,11 @@
+@import "../../style/theme.scss";
+
+$prefix: jv-button-circle;
+
+.#{$prefix} {
+  padding: 5px;
+  @include useTheme {
+    background-color: getVar("bg-color-1");
+    color: getVar("font-color-1");
+  }
+}

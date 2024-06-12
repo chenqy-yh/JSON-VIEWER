@@ -1,0 +1,26 @@
+@import "@/style/theme.scss";
+@import "@/style/utils.scss";
+
+$prefix: jv-circle-button;
+
+.#{$prefix} {
+  &-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+    padding: var(--jv-space-sm);
+    border-radius: 99999px;
+    transition: trans("", sm);
+    cursor: pointer;
+
+    &.withHover {
+      &:hover {
+        @include useTheme {
+          background-color: gv(bg-color-3);
+        }
+      }
+    }
+  }
+}

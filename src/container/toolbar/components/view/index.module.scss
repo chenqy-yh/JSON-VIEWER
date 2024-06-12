@@ -1,0 +1,30 @@
+@import "@/style/theme.scss";
+
+.view-title-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tools-item {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  gap: var(--jv-space-sm);
+  font-size: var(--jv-font-size-ssm);
+
+  .pre {
+    display: flex;
+    align-items: center;
+  }
+  .content {
+    // 不允许换行
+    white-space: nowrap;
+  }
+  .suf {
+    display: flex;
+    align-items: center;
+    @include useTheme {
+      color: gv(font-color-4);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+@import "@/style/theme.scss";
+
+.icon {
+  @include useTheme {
+    color: gv(font-color-2);
+  }
+}
