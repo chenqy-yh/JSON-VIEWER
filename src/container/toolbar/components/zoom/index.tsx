@@ -1,7 +1,11 @@
+import "./index.scss"
+
 import { Selector, SelectorExpand, SelectorExpandItem } from "@/components/selector"
 import { useGraph } from '@/store/use-graph'
 import { useEffect, useState } from "react"
-import { ViewPort } from "react-zoomable-ui"
+import { scopeClass } from '@/utils/style'
+
+const sc = scopeClass("jv-zoom")
 
 const roundFloat = (num: number, p: number) => {
     if (isNaN(num) || isNaN(p)) return 0
@@ -15,12 +19,15 @@ const formatPercent = (num: number) => {
 
 const Zoom = () => {
 
-    const viewPort = useGraph((state) => state.viewPort)
     const zoomFactor = useGraph((state) => state.viewPort?.zoomFactor)
-    const setViewPort = useGraph((state) => state.setViewPort)
     const setZoomFactor = useGraph((state) => state.setZoomFactor)
+    const centerViewPort = useGraph((state) => state.centerViewPort)
 
     const [zoomFactorTemplate, setZoomFactorTemplate] = useState(zoomFactor ?? 1)
+
+    const zoomFactorTitle = (
+        <div className={sc("title")}>{formatPercent(zoomFactorTemplate)}</div>
+    )
 
     useEffect(() => {
         if (!zoomFactor || isNaN(zoomFactor)) return
@@ -29,23 +36,17 @@ const Zoom = () => {
 
     const changeZoomFactor = (factor: number) => {
         setZoomFactor(factor)
-        const nextViewPort = { ...viewPort };
-        nextViewPort.zoomFactor = factor;
-        setViewPort(nextViewPort as unknown as ViewPort)
-
     }
 
     return (
-        <Selector title={formatPercent(zoomFactorTemplate)}>
+        <Selector title={zoomFactorTitle}>
             <SelectorExpand>
+                <SelectorExpandItem onClick={() => centerViewPort()}>Center</SelectorExpandItem>
                 <SelectorExpandItem onClick={() => changeZoomFactor(0.5)}>50%</SelectorExpandItem>
                 <SelectorExpandItem onClick={() => changeZoomFactor(1)}>100%</SelectorExpandItem>
                 <SelectorExpandItem onClick={() => changeZoomFactor(2)}>200%</SelectorExpandItem>
             </SelectorExpand>
-
         </Selector>
-        // <Selector title={viewPort?.zoomFactor}></Selector>
-
     )
 }
 

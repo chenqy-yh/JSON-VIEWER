@@ -1,0 +1,9 @@
+@import "@/style/mixins.scss";
+
+$prefix: jv-zoom;
+
+.#{$prefix} {
+  &-title {
+    @include useHover(bg-color-3);
+  }
+}

@@ -1,7 +1,7 @@
 import React, { ReactNode, useContext } from "react"
 import { scopeClass } from '@/utils/style'
 import './index.scss'
-import selectorContext from './selector-context'
+import {SelectorContext} from './selector-context'
 
 type SelectorExpandItemProps = {
     children: ReactNode
@@ -16,7 +16,7 @@ const SelectorExpandItem: React.FC<SelectorExpandItemProps> = (props) => {
         onClick
     } = props
 
-    const { setExpand } = useContext(selectorContext)
+    const { setExpand } = useContext(SelectorContext)
 
     const handleClick = (e: React.MouseEvent) => {
         if (onClick) {

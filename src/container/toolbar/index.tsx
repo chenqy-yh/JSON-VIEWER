@@ -1,5 +1,4 @@
 import styles from './index.module.scss'
-// import { Selector } from '@/components/selector'
 import File from './components/file'
 import View from './components/view'
 

@@ -5,26 +5,24 @@ import GraphView from "@/container/tree-view/graph-tree"
 
 import { Allotment } from 'allotment'
 import { useEffect, useRef, useState } from 'react'
+import { debounce } from "lodash"
+import "./App.module.scss"
 
 
 function App() {
 
   const [jvSize, setJvSize] = useState({ width: 0, height: 0 });
 
-  const rightRef = useRef<HTMLDivElement>(null);
   const paneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const updateSize = () => {
-
-      console.log("update size");
-
-      const boundingClientRect = rightRef.current?.getBoundingClientRect();
+    const updateSize = debounce(() => {
+      const boundingClientRect = paneRef.current?.getBoundingClientRect();
       setJvSize(() => ({
         width: boundingClientRect?.width || 0,
         height: boundingClientRect?.height || 0,
       }));
-    }
+    }, 300)
 
     const observer = new MutationObserver(updateSize);
 
@@ -41,16 +39,14 @@ function App() {
     <div className={styles.mainContent}>
       <ToolBar />
       <Allotment>
-        <Allotment.Pane>
-          <div className="left-area">
-            <Editor />
-          </div>
+        <Allotment.Pane
+          preferredSize={450}
+          minSize={300}
+          maxSize={800}>
+          <Editor />
         </Allotment.Pane>
-        <Allotment.Pane minSize={200} preferredSize="70%" ref={paneRef}>
-          <div ref={rightRef} className={styles.rightArea}>
-            {/* <JsonView size={jvSize} /> */}
-            <GraphView size={jvSize} />
-          </div>
+        <Allotment.Pane ref={paneRef}>
+          <GraphView size={jvSize} />
         </Allotment.Pane>
       </Allotment>
     </div>

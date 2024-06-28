@@ -11,13 +11,6 @@
 
 .function-list {
   display: flex;
-  gap: var(--jv-space);
-  align-items: center;
-}
-
-.test {
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -26,4 +19,5 @@
   @include useTheme {
     color: gv(font-color-1);
   }
+  margin-inline: var(--jv-space-sm);
 }

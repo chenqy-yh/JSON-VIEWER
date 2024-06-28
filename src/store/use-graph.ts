@@ -8,6 +8,7 @@ type InitGraphState = {
 type GraphActions = {
     setViewPort: (viewPort: ViewPort) => void
     setZoomFactor: (zoomFactor: number) => void
+    centerViewPort: () => void
 }
 
 type GraphStore = InitGraphState & GraphActions
@@ -22,6 +23,14 @@ export const useGraph = create<GraphStore>((set, get) => ({
     setZoomFactor: (zoomFactor) => {
         const viewPort = get().viewPort
         viewPort && viewPort.camera.recenter(viewPort.centerX, viewPort.centerY, zoomFactor)
+    },
+    centerViewPort: () => {
+        const el = document.querySelector(".jv-json-view-canvas") as HTMLElement
+        if (!el) return
+        const viewPort = get().viewPort
+        viewPort && viewPort.updateContainerSize()
+        viewPort?.camera.centerFitElementIntoView(el)
+        console.log("center");
     }
 }))
 

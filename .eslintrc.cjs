@@ -14,5 +14,9 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    // could any
+    '@typescript-eslint/no-explicit-any': 'off',
+    // only single quotes
+    quotes: ['error', 'single'],
   },
 }

@@ -2,7 +2,7 @@ import { FadeTranstion } from '@/components/transition';
 import { scopeClass } from '@/utils/style';
 import { ReactElement, ReactNode, useContext, useEffect, useRef } from "react";
 import './index.scss';
-import {default as selectorContext } from './selector-context';
+import { SelectorContext } from './selector-context';
 import SelectorExpand from './selector-expand';
 import SelectorTitle from "./selector-title";
 import SelectorProvider from './selector-provider';
@@ -12,14 +12,20 @@ type SelectorProps = {
     children?: ReactElement<typeof SelectorExpand>
 }
 
-const sc = scopeClass("selector-container")
+const sc = scopeClass("selector")
 
+const SelectorWrapper: React.FC<SelectorProps> = (props) => {
+    return (
+        <SelectorProvider>
+            <Selector {...props} />
+        </SelectorProvider>
+    )
+}
 
 const Selector: React.FC<SelectorProps> = ({ title, children }) => {
 
-    const { isExpand: isListExpand, setExpand: setListExpend } = useContext(selectorContext)
+    const { isExpand, setExpand } = useContext(SelectorContext)
 
-    // const [isListExpand, setListExpend] = useState(false)
     const selectorRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
@@ -31,30 +37,27 @@ const Selector: React.FC<SelectorProps> = ({ title, children }) => {
 
     const handleClickOutside = (e: MouseEvent) => {
         if (selectorRef.current && !selectorRef.current.contains(e.target as Node)) {
-            setListExpend(false)
+            setExpand(false)
         }
     }
 
     const handleToggleListExpend = () => {
-        setListExpend(!isListExpand)
+        setExpand(!isExpand)
 
     }
 
     return (
-        <SelectorProvider>
-            <div ref={selectorRef} className={sc()}>
-                <SelectorTitle handleToggleListExpend={handleToggleListExpend}>
-                    {title}
-                </SelectorTitle>
-                {children &&
-                    <FadeTranstion show={isListExpand}>
-                        {children}
-                    </FadeTranstion>
-                }
-
-            </div >
-        </SelectorProvider>
+        <div ref={selectorRef} className={sc("container")}>
+            <SelectorTitle handleToggleListExpend={handleToggleListExpend}>
+                {title}
+            </SelectorTitle>
+            {children &&
+                <FadeTranstion show={isExpand}>
+                    {children}
+                </FadeTranstion>
+            }
+        </div >
     )
 }
 
-export default Selector
+export default SelectorWrapper

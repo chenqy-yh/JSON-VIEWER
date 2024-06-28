@@ -1,4 +1,4 @@
-import Editor from '@/container/editor'
+import Editor from "@/container/editor"
 
 export default function Home() {
     return (

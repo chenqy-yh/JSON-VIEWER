@@ -1,21 +1,56 @@
-import { Editor, OnValidate } from '@monaco-editor/react'
+import { useJson } from '@/store/use-json'
+import { Editor, OnMount, OnValidate } from '@monaco-editor/react'
 import { debounce } from "lodash"
 import { editor } from 'monaco-editor'
-import { useEffect, useMemo, useState } from 'react'
-import { useJson } from '@/store/use-json'
+import { useCallback, useMemo, useState } from 'react'
 
 const defaultLanguage = 'json'
 
-const defaultCode =
-    `{
-    "name": "John Doe",
-    "age": 30,
-    "cars": {
-        "car1": "Ford",
-        "car2": "BMW",
-        "car3": "Fiat"
-    }
-}`
+// const defaultCode =
+//     `{
+//         "squadName": "Super hero squad",
+//         "homeTown": "Metro City",
+//         "formed": 2016,
+//         "secretBase": "Super tower",
+//         "active": true,
+//         "members": [
+//           {
+//             "name": "Molecule Man",
+//             "age": 29,
+//             "secretIdentity": "Dan Jukes",
+//             "powers": [
+//               "Radiation resistance",
+//               "Turning tiny",
+//               "Radiation blast"
+//             ]
+//           },
+//           {
+//             "name": "Madame Uppercut",
+//             "age": 39,
+//             "secretIdentity": "Jane Wilson",
+//             "powers": [
+//               "Million tonne punch",
+//               "Damage resistance",
+//               "Superhuman reflexes"
+//             ]
+//           },
+//           {
+//             "name": "Eternal Flame",
+//             "age": 1000000,
+//             "secretIdentity": "Unknown"
+//           }
+//         ]
+//       }`
+
+const defaultCode = `
+  {
+    "powers": [
+        "Million tonne punch",
+        "Damage resistance",
+        "Superhuman reflexes"
+    ]
+  }
+`
 
 const editorHeight = '100vh'
 
@@ -23,21 +58,16 @@ const editorHeight = '100vh'
 function MonacoEditor() {
 
     const [preCode, setPreCode] = useState(defaultCode)
-    const validate = useJson((state) => state.isValidate)
-    const setValidate = useJson((state) => state.setValidate)
     const setCode = useJson((state) => state.setContent)
 
-    useEffect(() => {
-        if (!validate) return;
+    const onMount: OnMount = useCallback(() => {
         setCode(preCode)
-    }, [preCode])
-
+    }, [preCode, setCode])
 
 
     const handleEditorValidation: OnValidate = (markers) => {
-        console.log('onValidate', markers)
         const isValidate = markers.length === 0
-        setValidate(isValidate)
+        isValidate && setCode(preCode)
     }
 
     const debounceOnCodeChange = debounce((code) => {
@@ -60,6 +90,7 @@ function MonacoEditor() {
             onValidate={handleEditorValidation}
             options={editorOptions}
             onChange={(val) => debounceOnCodeChange(val)}
+            onMount={onMount}
         />
     )
 }

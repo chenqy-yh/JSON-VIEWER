@@ -1,9 +1,11 @@
 @import "@/style/theme.scss";
+@import "@/style/mixins.scss";
 
 .view-title-box {
   display: flex;
   justify-content: center;
   align-items: center;
+  @include useHover(bg-color-3);
 }
 
 .tools-item {

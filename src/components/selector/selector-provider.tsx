@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SelctorContext from './selector-context'
+import {SelectorContext} from './selector-context'
 
 type SelectorProviderProps = {
     children: React.ReactNode
@@ -11,9 +11,9 @@ const SelectorProvider: React.FC<SelectorProviderProps> = (props) => {
     const [isExpand, setExpand] = useState(false);
 
     return (
-        <SelctorContext.Provider value={{ isExpand: isExpand, setExpand: setExpand }}>
+        <SelectorContext.Provider value={{ isExpand, setExpand }}>
             {children}
-        </SelctorContext.Provider>
+        </SelectorContext.Provider>
     )
 }
 

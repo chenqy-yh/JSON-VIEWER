@@ -1,83 +1,100 @@
-import { useGraph } from '@/store/use-graph';
-import { scopeClass } from '@/utils/style';
-import { debounce } from 'lodash';
-import { Space, ViewPort } from 'react-zoomable-ui';
-import { Canvas } from 'reaflow';
+import GridSvg from "@/components/grid";
+import styled from "@emotion/styled";
 import "./index.scss";
 
-type JsonViewProps = {
+import { useGraph } from '@/store/use-graph';
+import { useJson } from "@/store/use-json";
+import { scopeClass } from '@/utils/style';
+import { debounce } from "lodash";
+import { useEffect, useRef, useState } from "react";
+import { Space, ViewPort } from 'react-zoomable-ui';
+import { Canvas, CanvasPosition, CanvasRef, EdgeData, NodeData } from 'reaflow';
+import { parser } from "./utils/parser";
+
+type GraphViewProps = {
     size: { width: number, height: number }
 }
 
-
 const sc = scopeClass("jv-json-view")
 
-const toPX = (num: number) => `${isNaN(num) ? 0 : num}px`
+const StyledWrapper = styled.div`
+    height:100%;
+`
 
+const GraphView: React.FC<GraphViewProps> = (props) => {
+    const { size } = props;
 
-const GraphView: React.FC<JsonViewProps> = (props) => {
-
-
+    const viewPort = useGraph((state) => state.viewPort)
     const setViewPort = useGraph((state) => state.setViewPort)
+    const [paneWidth, setPaneWidth] = useState(2000)
+    const [paneHeight, setPaneHeight] = useState(2000)
+    const canvasRef = useRef<CanvasRef>(null)
 
-    const nodes = [
-        {
-            id: '1',
-            text: 'Node 1',
-        },
-        {
-            id: '2',
-            text: 'Node 2',
-        },
-        {
-            id: '3',
-            text: 'Node 3',
-        },
-    ]
+    const content = useJson((state) => state.content)
 
-    const edges = [
-        {
-            id: '1-2',
-            from: '1',
-            to: '2',
-        },
-        {
-            id: '1-3',
-            from: '1',
-            to: '3',
-        },
-    ]
+    const [nodes, setNodes] = useState<NodeData[]>([])
+    const [edges, setEdges] = useState<EdgeData[]>([])
 
+    useEffect(() => {
+        const parserRes = parser(content)
+        if (!parserRes) return;
+        const { nodes, edges } = parserRes;
 
-    const debounceOnUpdated = debounce((viewPort: ViewPort) => {
+        setNodes(nodes)
+        setEdges(edges)
+    }, [content])
+
+    const debouncedOnUpdated = debounce((viewPort: ViewPort) => {
         setViewPort(viewPort)
     }, 300)
 
-    // return <div className={sc("box")}>{content}</div>
+
+    useEffect(() => {
+        if (
+            !canvasRef.current
+            || !canvasRef.current.layout.width
+            || !canvasRef.current.layout.height
+        ) return;
+        console.log(canvasRef.current.layout.width, canvasRef.current.layout.height)
+        setPaneWidth(canvasRef.current.layout.width + 50)
+        setPaneHeight(canvasRef.current.layout.height + 50)
+    }, [canvasRef, size])
+
+    useEffect(() => {
+        if (!viewPort) return
+        viewPort.updateContainerSize()
+        viewPort.camera.centerFitAreaIntoView({
+            top: 0,
+            left: 0,
+            width: paneWidth,
+            height: paneHeight
+        })
+    }, [viewPort, paneWidth, paneHeight])
+
     return (
-        <div
-            style={{
-                width: toPX(props.size.width),
-                height: toPX(props.size.height),
-                border: "1px solid red",
-            }}
-        >
+        <StyledWrapper>
+            <GridSvg width={size.width} height={size.height} />
             <Space
-                onUpdated={(v) => debounceOnUpdated(v)}
-                onCreate={(v) => {
-                    setViewPort(v)
-                }}>
+                onUpdated={debouncedOnUpdated}
+                onCreate={setViewPort}>
                 <Canvas
-                    width={props.size.width}
-                    height={props.size.height}
+                    ref={canvasRef}
                     nodes={nodes}
                     edges={edges}
+                    width={paneWidth}
+                    height={paneHeight}
+                    maxWidth={paneWidth}
+                    maxHeight={paneHeight}
+                    pannable={false}
+                    defaultPosition={CanvasPosition.CENTER}
                     className={sc("canvas")}
-                    fit={true}
-                    zoomable={true}
+                    direction="RIGHT"
+                    readonly
+                // node={(nodeProps) => <CustomNode {...nodeProps} />}
                 />
+
             </Space>
-        </div>
+        </StyledWrapper>
     )
 }
 

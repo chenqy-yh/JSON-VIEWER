@@ -10,4 +10,4 @@ const SelectorContext = createContext<SelectorContextType>({
     setExpand: () => { }
 });
 
-export default SelectorContext
+export { SelectorContext }
